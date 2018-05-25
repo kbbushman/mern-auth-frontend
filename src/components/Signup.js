@@ -17,18 +17,20 @@ class Signup extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
+    if (this.state.password === this.state.password2) {
+      const newUser = {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
+      }
+  
+      axios.post('http://localhost:5000/api/users/register', newUser)
+        // .then(res => console.log(res.data))
+        .then(res => {
+          this.props.history.push('/login');
+        })
+        .catch(err => console.log(err.response.data));
     }
-
-    axios.post('http://localhost:5000/api/users/register', newUser)
-      // .then(res => console.log(res.data))
-      .then(res => {
-        this.props.history.push('/login');
-      })
-      .catch(err => console.log(err.response.data));
   }
 
   render() {

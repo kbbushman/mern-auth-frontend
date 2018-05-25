@@ -33,6 +33,14 @@ class App extends Component {
     this.setState({ currentUser: userData, isAuthenticated: true })
   }
 
+  handleLogout = () => {
+    if(localStorage.getItem('jwtToken') !== null) {
+      localStorage.removeItem('jwtToken');
+      this.setState({ currentUser: null, isAuthenticated: false });
+      // <Redirect to='/' />;
+    }
+  }
+
   render() {
     console.log('Current User = ', this.state.currentUser);
     console.log('Authenticated = ', this.state.isAuthenticated);
@@ -47,7 +55,7 @@ class App extends Component {
 
     return (
       <div>
-        <Navbar isAuthed={this.state.isAuthenticated} />
+        <Navbar handleLogout={this.handleLogout} isAuthed={this.state.isAuthenticated} />
         <div className="container mt-5">
           <Switch>
             <Route path='/signup' component={ Signup } />
